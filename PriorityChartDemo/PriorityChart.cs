@@ -48,6 +48,15 @@ namespace PriorityChartDemo
             600
         };
 
+        public static readonly StyledProperty<bool> IsFilledProperty = 
+            AvaloniaProperty.Register<PriorityChart, bool>(nameof(IsFilled), true);
+
+        public bool IsFilled
+        {
+            get => GetValue(IsFilledProperty);
+            set => SetValue(IsFilledProperty, value);
+        }
+
         public override void Render(DrawingContext context)
         {
             base.Render(context);
@@ -71,9 +80,15 @@ namespace PriorityChartDemo
                 points[i] = new Point(i * step, scaledValues[i]);
             }
 
-            DrawDataFill(context, points, valuesWidth, valuesHeight, leftMargin, topMargin);
+            if (IsFilled)
+            {
+                DrawDataFill(context, points, valuesWidth, valuesHeight, leftMargin, topMargin);
+            }
+
             DrawDataStroke(context, points, leftMargin, topMargin);
+
             DrawLabels(context, step, height, rightMargin, topMargin, bottomMargin);
+
             DrawBorder(context);
         }
 
