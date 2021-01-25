@@ -51,10 +51,19 @@ namespace PriorityChartDemo
         public static readonly StyledProperty<bool> IsFilledProperty = 
             AvaloniaProperty.Register<PriorityChart, bool>(nameof(IsFilled), true);
 
+        public static readonly StyledProperty<bool> IsStrokedProperty = 
+            AvaloniaProperty.Register<PriorityChart, bool>(nameof(IsStroked), true);
+
         public bool IsFilled
         {
             get => GetValue(IsFilledProperty);
             set => SetValue(IsFilledProperty, value);
+        }
+
+        public bool IsStroked
+        {
+            get => GetValue(IsStrokedProperty);
+            set => SetValue(IsStrokedProperty, value);
         }
 
         public override void Render(DrawingContext context)
@@ -85,7 +94,10 @@ namespace PriorityChartDemo
                 DrawDataFill(context, points, valuesWidth, valuesHeight, leftMargin, topMargin);
             }
 
-            DrawDataStroke(context, points, leftMargin, topMargin);
+            if (IsStroked)
+            {
+                DrawDataStroke(context, points, leftMargin, topMargin);
+            }
 
             DrawLabels(context, step, height, rightMargin, topMargin, bottomMargin);
 
