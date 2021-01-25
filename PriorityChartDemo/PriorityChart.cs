@@ -116,7 +116,7 @@ namespace PriorityChartDemo
             geometryContext.LineTo(new Point(width, height));
             geometryContext.LineTo(new Point(0, height));
             geometryContext.EndFigure(true);
-            var brush = new ImmutableSolidColorBrush(Color.FromArgb(255, 198, 218, 252));
+            var brush = new ImmutableSolidColorBrush(Color.FromArgb(0xFF, 0xC6, 0xDA, 0xFC));
             var transform = context.PushPreTransform(Matrix.CreateTranslation(leftMargin, topMargin));
             context.DrawGeometry(brush, null, geometry);
             transform.Dispose();
@@ -132,7 +132,7 @@ namespace PriorityChartDemo
                 geometryContext.LineTo(points[i]);
             }
             geometryContext.EndFigure(false);
-            var brush = new ImmutableSolidColorBrush(Color.FromArgb(255, 66, 133, 244));
+            var brush = new ImmutableSolidColorBrush(Color.FromArgb(0xFF, 0x42, 0x85, 0xF4));
             var pen = new ImmutablePen(brush, 2);
             var transform = context.PushPreTransform(Matrix.CreateTranslation(leftMargin, topMargin));
             context.DrawGeometry(null, pen, geometry);
@@ -141,7 +141,7 @@ namespace PriorityChartDemo
 
         private void DrawLabels(DrawingContext context, double step, double height, double rightMargin, double topMargin, double bottomMargin)
         {
-            var brush = new ImmutableSolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            var brush = new ImmutableSolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));
             var typeface = new Typeface("system", FontStyle.Normal, FontWeight.Normal);
             for (var i = 0; i < Labels.Count; i++)
             {
