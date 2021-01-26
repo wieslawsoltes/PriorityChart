@@ -13,6 +13,7 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Styles>
+        <!-- Slider Fee -->
         <Style Selector="Slider.cursor">
             <Setter Property="RenderTransform">
                 <RotateTransform Angle="-180"></RotateTransform>
@@ -30,6 +31,28 @@
         <Style Selector="Slider:horizontal.cursor">
             <Setter Property="Background" Value="{DynamicResource SliderTrackFill}" />
         </Style>
+        <!-- LineChart Labels -->
+        <Style Selector="local|LineChart.labels">
+            <Setter Property="LabelForeground" Value="#000000" />
+            <Setter Property="LabelAngle" Value="-45" />
+            <Setter Property="LabelOffset" Value="15" />
+            <Setter Property="LabelHeight" Value="45" />
+            <Setter Property="LabelAlignment" Value="Left" />
+            <Setter Property="LabelFontFamily" Value="Arial" />
+            <Setter Property="LabelFontStyle" Value="Normal" />
+            <Setter Property="LabelFontWeight" Value="Normal" />
+            <Setter Property="LabelFontSize" Value="12" />
+        </Style>
+        <!-- LineChart Cursor -->
+        <Style Selector="local|LineChart.cursor">
+            <Setter Property="CursorStroke" Value="#72BD81" />
+            <Setter Property="CursorThickness" Value="2" />
+        </Style>
+        <!-- LineChart Border -->
+        <Style Selector="local|LineChart.border">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
     </Window.Styles>
     <TabControl>
         <TabItem Header="Solid">
@@ -43,31 +66,19 @@
                             Value="36" 
                             Margin="0,0,30,0"/>
                 </DockPanel>
-                <local:LineChart Width="785"
+                <local:LineChart Classes="labels cursor border"
+                                 Width="785"
                                  Height="428"
                                  Values="{Binding Values}"
                                  Labels="{Binding Labels}"
                                  MinValue="2"
                                  MaxValue="1008"
                                  LogarithmicScale="False"
-                                 LineMargin="60,30,30,60"
+                                 ValuesMargin="60,30,30,60"
                                  Fill="#C6DAFC"
                                  Stroke="#4285F4"
                                  StrokeThickness="2"
-                                 LabelForeground="#000000"
-                                 LabelAngle="-45"
-                                 LabelOffset="20"
-                                 LabelHeight="45"
-                                 LabelAlignment="Right"
-                                 LabelFontFamily="Arial"
-                                 LabelFontStyle="Normal"
-                                 LabelFontWeight="Normal"
-                                 LabelFontSize="12"
-                                 CursorStroke="#72BD81"
-                                 CursorThickness="2"
-                                 CursorValue="{Binding #CursorValue1.Value}"
-                                 BorderBrush="Black"
-                                 BorderThickness="1">
+                                 CursorValue="{Binding #CursorValue1.Value}">
                 </local:LineChart>
             </DockPanel>
         </TabItem>
@@ -82,28 +93,18 @@
                             Value="36" 
                             Margin="0,0,30,0"/>
                 </DockPanel>
-                <local:LineChart Width="785"
+                <local:LineChart Classes="labels cursor border"
+                                 Width="785"
                                  Height="428"
                                  Values="{Binding Values}"
                                  Labels="{Binding Labels}"
                                  MinValue="2"
                                  MaxValue="1008"
-                                 LineMargin="60,30,30,60"
-                                 LabelForeground="#000000"
-                                 LabelAngle="-45"
-                                 LabelOffset="20"
-                                 LabelHeight="45"
-                                 LabelAlignment="Right"
-                                 LabelFontFamily="Arial"
-                                 LabelFontStyle="Normal"
-                                 LabelFontWeight="Normal"
-                                 LabelFontSize="12"
+                                 ValuesMargin="60,30,30,60"
                                  StrokeThickness="2"
                                  CursorStroke="#72BD81"
                                  CursorThickness="2"
-                                 CursorValue="{Binding #CursorValue2.Value}"
-                                 BorderBrush="Black"
-                                 BorderThickness="1">
+                                 CursorValue="{Binding #CursorValue2.Value}">
                     <local:LineChart.Fill>
                         <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                             <LinearGradientBrush.GradientStops>
