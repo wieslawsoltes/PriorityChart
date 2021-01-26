@@ -188,6 +188,12 @@ namespace ChartDemo
         public static readonly StyledProperty<double> BorderThicknessProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(BorderThickness));
 
+        public static readonly StyledProperty<double> BorderRadiusXProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(BorderRadiusX));
+
+        public static readonly StyledProperty<double> BorderRadiusYProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(BorderRadiusY));
+
         #endregion
 
         #region LineChart ctor
@@ -537,6 +543,18 @@ namespace ChartDemo
             set => SetValue(BorderThicknessProperty, value);
         }
 
+        public double BorderRadiusX
+        {
+            get => GetValue(BorderRadiusXProperty);
+            set => SetValue(BorderRadiusXProperty, value);
+        }
+
+        public double BorderRadiusY
+        {
+            get => GetValue(BorderRadiusYProperty);
+            set => SetValue(BorderRadiusYProperty, value);
+        }
+
         #endregion
 
         #endregion
@@ -793,10 +811,12 @@ namespace ChartDemo
         {
             var brush = BorderBrush;
             var thickness = BorderThickness;
+            var radiusX = BorderRadiusX;
+            var radiusY = BorderRadiusY;
             var pen = new Pen(brush, thickness);
             var rect = new Rect(x, y, width, height);
             var rectDeflate = rect.Deflate(thickness * 0.5);
-            context.DrawRectangle(null, pen, rectDeflate, 0, 0);
+            context.DrawRectangle(null, pen, rectDeflate, radiusX, radiusY);
         }
     }
 }
