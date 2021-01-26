@@ -9,6 +9,9 @@
         UseLayoutRounding="False"
         Width="1003" Height="652"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Styles>
         <Style Selector="Slider.cursor">
             <Setter Property="RenderTransform">
@@ -42,6 +45,8 @@
                 </DockPanel>
                 <local:LineChart Width="785"
                                  Height="428"
+                                 Values="{Binding Values}"
+                                 Labels="{Binding Labels}"
                                  MinValue="2"
                                  MaxValue="1008"
                                  LogarithmicScale="False"
@@ -75,6 +80,8 @@
                 </DockPanel>
                 <local:LineChart Width="785"
                                  Height="428"
+                                 Values="{Binding Values}"
+                                 Labels="{Binding Labels}"
                                  MinValue="2"
                                  MaxValue="1008"
                                  LineMargin="60,30,30,60"

@@ -4,13 +4,18 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Media.Immutable;
 
 namespace ChartDemo
 {
     public class LineChart : Control
     {
         #region Properties
+
+        public static readonly StyledProperty<List<double>> ValuesProperty = 
+            AvaloniaProperty.Register<LineChart, List<double>>(nameof(Values));
+
+        public static readonly StyledProperty<List<string>> LabelsProperty = 
+            AvaloniaProperty.Register<LineChart, List<string>>(nameof(Labels));
 
         public static readonly StyledProperty<double> MinValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(MinValue));
@@ -67,6 +72,8 @@ namespace ChartDemo
         {
             AffectsMeasure<LineChart>(StrokeThicknessProperty);
             AffectsRender<LineChart>(
+                ValuesProperty,
+                LabelsProperty,
                 MinValueProperty,
                 MaxValueProperty,
                 FillProperty, 
@@ -77,6 +84,18 @@ namespace ChartDemo
                 CursorStrokeProperty,
                 CursorThicknessProperty,
                 CursorValueProperty);
+        }
+
+        public List<double> Values
+        {
+            get => GetValue(ValuesProperty);
+            set => SetValue(ValuesProperty, value);
+        }
+
+        public List<string> Labels
+        {
+            get => GetValue(LabelsProperty);
+            set => SetValue(LabelsProperty, value);
         }
 
         public double MinValue
@@ -183,44 +202,6 @@ namespace ChartDemo
 
         #endregion
 
-        private List<string> Labels = new List<string>()
-        {
-            "6 days",
-            "4 days",
-            "3 days",
-            "1 day",
-            "22 hours",
-            "20 hours",
-            "18 hours",
-            "10 hours",
-            "6 hours",
-            "4 hours",
-            "2 hours",
-            "1 hour",
-            "50 min",
-            "30 min",
-            "20 min"
-        };
-
-        private List<double> Values = new List<double>()
-        {
-            15,
-            22,
-            44,
-            50,
-            64,
-            68,
-            92,
-            114,
-            118,
-            142,
-            182,
-            222,
-            446,
-            548,
-            600
-        };
-
         private static double ScaleHorizontal(double value, double max, double range)
         {
             return value / max * range;
@@ -237,17 +218,19 @@ namespace ChartDemo
 
             var width = this.Bounds.Width;
             var height = this.Bounds.Height;
-            var lineMargin = LineMargin;
 
+            var lineMargin = LineMargin;
             var valuesWidth = width - lineMargin.Left - lineMargin.Right;
             var valuesHeight = height - lineMargin.Top - lineMargin.Bottom;
             var logarithmicScale = LogarithmicScale;
-            var values = logarithmicScale ? Values.Select(y => Math.Log(y)).ToList() : Values.ToList();
-            var valuesMax = values.Max();
-            var scaledValues = values.Select(y => ScaleVertical(y, valuesMax, valuesHeight)).ToList();
-            var step = valuesWidth / (values.Count - 1);
-            var points = new Point[values.Count];
-            for (var i = 0; i < values.Count; i++)
+            var values = Values;
+            var labels = Labels;
+            var valuesList = logarithmicScale ? values.Select(y => Math.Log(y)).ToList() : values.ToList();
+            var valuesMax = valuesList.Max();
+            var scaledValues = valuesList.Select(y => ScaleVertical(y, valuesMax, valuesHeight)).ToList();
+            var step = valuesWidth / (valuesList.Count - 1);
+            var points = new Point[valuesList.Count];
+            for (var i = 0; i < valuesList.Count; i++)
             {
                 points[i] = new Point(i * step, scaledValues[i]);
             }
@@ -274,7 +257,7 @@ namespace ChartDemo
 
             if (LabelForeground is not null)
             {
-                DrawLabels(context, step, valuesHeight, lineMargin);
+                DrawLabels(context, labels, step, valuesHeight, lineMargin);
             }
 
             if (BorderBrush is not null)
@@ -331,7 +314,7 @@ namespace ChartDemo
             transform.Dispose();
         }
 
-        private void DrawLabels(DrawingContext context, double step, double height, Thickness margin)
+        private void DrawLabels(DrawingContext context, List<string> labels, double step, double height, Thickness margin)
         {
             var typeface = new Typeface("system", FontStyle.Normal, FontWeight.Normal);
             var labelFontSize = 12;
@@ -340,14 +323,14 @@ namespace ChartDemo
             var labelForeground = LabelForeground;
             var labelAngle = LabelAngle;
             var labelAlignment = LabelAlignment;
-            for (var i = 0; i < Labels.Count; i++)
+            for (var i = 0; i < labels.Count; i++)
             {
                 var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + labelOffset);
                 var constraint = new Size(step, labelHeight);
                 var formattedText = new FormattedText()
                 {
                     Typeface = typeface,
-                    Text = Labels[i],
+                    Text = labels[i],
                     TextAlignment = labelAlignment,
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = labelFontSize,
