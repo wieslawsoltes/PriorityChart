@@ -48,6 +48,18 @@
             <Setter Property="CursorStroke" Value="#72BD81" />
             <Setter Property="CursorThickness" Value="2" />
         </Style>
+        <!-- LineChart XAxis -->
+        <Style Selector="local|LineChart.xaxis">
+            <Setter Property="XAxisStroke" Value="Black" />
+            <Setter Property="XAxisStrokeThickness" Value="1" />
+            <Setter Property="XAxisArrowSize" Value="3.5" />
+        </Style>
+        <!-- LineChart YAxis -->
+        <Style Selector="local|LineChart.yaxis">
+            <Setter Property="YAxisStroke" Value="Black" />
+            <Setter Property="YAxisStrokeThickness" Value="1" />
+            <Setter Property="YAxisArrowSize" Value="3.5" />
+        </Style>
         <!-- LineChart Border -->
         <Style Selector="local|LineChart.border">
             <Setter Property="BorderBrush" Value="Black" />
@@ -66,7 +78,7 @@
                             Value="36" 
                             Margin="0,0,30,0"/>
                 </DockPanel>
-                <local:LineChart Classes="labels cursor border"
+                <local:LineChart Classes="labels cursor border yaxis"
                                  Width="785"
                                  Height="428"
                                  Values="{Binding Values}"
@@ -93,7 +105,7 @@
                             Value="36" 
                             Margin="0,0,30,0"/>
                 </DockPanel>
-                <local:LineChart Classes="labels cursor border"
+                <local:LineChart Classes="labels cursor border yaxis"
                                  Width="785"
                                  Height="428"
                                  Values="{Binding Values}"
