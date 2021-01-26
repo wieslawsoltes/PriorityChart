@@ -71,6 +71,9 @@ namespace ChartDemo
 
         #region XAxis
 
+        public static readonly StyledProperty<string> XAxisTitleProperty = 
+            AvaloniaProperty.Register<LineChart, string>(nameof(XAxisTitle));
+
         public static readonly StyledProperty<IBrush?> XAxisStrokeProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(XAxisStroke));
 
@@ -83,6 +86,9 @@ namespace ChartDemo
         #endregion
 
         #region YAxis
+
+        public static readonly StyledProperty<string> YAxisTitleProperty = 
+            AvaloniaProperty.Register<LineChart, string>(nameof(YAxisTitle));
 
         public static readonly StyledProperty<IBrush?> YAxisStrokeProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(YAxisStroke));
@@ -316,6 +322,12 @@ namespace ChartDemo
 
         #region XAxis
 
+        public string XAxisTitle
+        {
+            get => GetValue(XAxisTitleProperty);
+            set => SetValue(XAxisTitleProperty, value);
+        }
+
         public IBrush? XAxisStroke
         {
             get => GetValue(XAxisStrokeProperty);
@@ -337,6 +349,12 @@ namespace ChartDemo
         #endregion
 
         #region YAxis
+
+        public string YAxisTitle
+        {
+            get => GetValue(YAxisTitleProperty);
+            set => SetValue(YAxisTitleProperty, value);
+        }
 
         public IBrush? YAxisStroke
         {
@@ -577,6 +595,11 @@ namespace ChartDemo
                 DrawYAxis(context, valuesWidth, valuesHeight, valuesMargin);
             }
 
+            if (YAxisTitleForeground is not null)
+            {
+                DrawYAxisTitle(context, YAxisTitle, valuesWidth, valuesHeight, valuesMargin);
+            }
+
             if (LabelForeground is not null)
             {
                 DrawLabels(context, labels, step, valuesHeight, valuesMargin);
@@ -675,6 +698,46 @@ namespace ChartDemo
             context.DrawLine(pen, p5, p6);
         }
 
+        private void DrawYAxisTitle(DrawingContext context, string title, double width, double height, Thickness margin)
+        {
+            var fontFamily = YAxisTitleFontFamily;
+            var fontStyle = YAxisTitleFontStyle;
+            var fontWeight = YAxisTitleFontWeight;
+            var typeface = new Typeface(fontFamily, fontStyle, fontWeight);
+            var fontSize = YAxisTitleFontSize;
+            var offset = YAxisTitleOffset;
+            var constrainHeight = YAxisTitleHeight;
+            var foreground = YAxisTitleForeground;
+            var angleRadians = Math.PI / 180.0 * YAxisTitleAngle;
+            var alignment = YAxisTitleAlignment;
+
+            var origin = new Point(margin.Left, margin.Top + offset);
+            var constraint = new Size(200, 50);
+            var formattedText = new FormattedText()
+            {
+                Typeface = typeface,
+                Text = title,
+                TextAlignment = alignment,
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = fontSize,
+                Constraint = constraint
+            };
+            var xPosition = origin.X;
+            var yPosition = origin.Y;
+            var matrix = Matrix.CreateTranslation(-xPosition, -yPosition)
+                         * Matrix.CreateRotation(angleRadians)
+                         * Matrix.CreateTranslation(xPosition, yPosition);
+            var transform = context.PushPreTransform(matrix);
+            context.DrawText(foreground, origin, formattedText);
+#if false
+            context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Magenta)), new Rect(origin, constraint));
+#endif
+            transform.Dispose();
+#if false
+            context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Cyan)), new Rect(origin, constraint));
+#endif
+        }
+
         private void DrawLabels(DrawingContext context, List<string> labels, double step, double height, Thickness margin)
         {
             var fontFamily = LabelFontFamily;
@@ -682,20 +745,21 @@ namespace ChartDemo
             var fontWeight = LabelFontWeight;
             var typeface = new Typeface(fontFamily, fontStyle, fontWeight);
             var fontSize = LabelFontSize;
-            var labelOffset = LabelOffset;
-            var labelHeight = LabelHeight;
-            var labelForeground = LabelForeground;
-            var labelAngleRadians = Math.PI / 180.0 * LabelAngle;
-            var labelAlignment = LabelAlignment;
+            var offset = LabelOffset;
+            var constrainHeight = LabelHeight;
+            var foreground = LabelForeground;
+            var angleRadians = Math.PI / 180.0 * LabelAngle;
+            var alignment = LabelAlignment;
+
             for (var i = 0; i < labels.Count; i++)
             {
-                var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + labelOffset);
-                var constraint = new Size(step, labelHeight);
+                var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + offset);
+                var constraint = new Size(step, constrainHeight);
                 var formattedText = new FormattedText()
                 {
                     Typeface = typeface,
                     Text = labels[i],
-                    TextAlignment = labelAlignment,
+                    TextAlignment = alignment,
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = fontSize,
                     Constraint = constraint
@@ -703,10 +767,10 @@ namespace ChartDemo
                 var xPosition = origin.X + constraint.Width / 2;
                 var yPosition = origin.Y + constraint.Height / 2;
                 var matrix = Matrix.CreateTranslation(-xPosition, -yPosition)
-                             * Matrix.CreateRotation(labelAngleRadians)
+                             * Matrix.CreateRotation(angleRadians)
                              * Matrix.CreateTranslation(xPosition, yPosition);
                 var transform = context.PushPreTransform(matrix);
-                context.DrawText(labelForeground, origin, formattedText);
+                context.DrawText(foreground, origin, formattedText);
 #if false
                 context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Magenta)), new Rect(origin, constraint));
 #endif
