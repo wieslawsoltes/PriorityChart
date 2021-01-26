@@ -49,6 +49,9 @@ namespace ChartDemo
         public static readonly StyledProperty<double> BorderThicknessProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(BorderThickness));
 
+        public static readonly StyledProperty<TextAlignment> LabelAlignmentProperty = 
+            AvaloniaProperty.Register<LineChart, TextAlignment>(nameof(LabelAlignment));
+
         static LineChart()
         {
             AffectsMeasure<LineChart>(StrokeThicknessProperty);
@@ -105,6 +108,12 @@ namespace ChartDemo
         {
             get => GetValue(LabelAngleProperty);
             set => SetValue(LabelAngleProperty, value);
+        }
+
+        public TextAlignment LabelAlignment
+        {
+            get => GetValue(LabelAlignmentProperty);
+            set => SetValue(LabelAlignmentProperty, value);
         }
 
         public Thickness LineMargin
@@ -232,7 +241,7 @@ namespace ChartDemo
 
             if (LabelForeground is not null)
             {
-                DrawLabels(context, step, height, lineMargin);
+                DrawLabels(context, step, valuesHeight, lineMargin);
             }
 
             if (BorderBrush is not null)
@@ -293,27 +302,35 @@ namespace ChartDemo
         {
             var typeface = new Typeface("system", FontStyle.Normal, FontWeight.Normal);
             var fontSize = 12;
-            var topOffset = 55;
+            var topOffset = 10;
             var labelForeground = LabelForeground;
             var labelAngle = LabelAngle;
+            var labelAlignment = LabelAlignment;
             for (var i = 0; i < Labels.Count; i++)
             {
-                var origin = new Point(i * step + step / 2, height + margin.Top - topOffset);
+                var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + topOffset);
+                var constraint = new Size(step, margin.Bottom);
                 var formattedText = new FormattedText()
                 {
                     Typeface = typeface,
                     Text = Labels[i],
-                    TextAlignment = TextAlignment.Right,
-                    TextWrapping = TextWrapping.NoWrap,
+                    TextAlignment = labelAlignment,
+                    TextWrapping = TextWrapping.Wrap,
                     FontSize = fontSize,
-                    Constraint = new Size(0, 0)
+                    Constraint = constraint
                 };
-                var matrix = Matrix.CreateTranslation(-origin.X, -origin.Y)
+                var matrix = Matrix.CreateTranslation(-(origin.X + constraint.Width / 2), -(origin.Y + constraint.Height / 2))
                              * Matrix.CreateRotation(Math.PI / 180.0 * labelAngle)
-                             * Matrix.CreateTranslation(origin.X, origin.Y);
+                             * Matrix.CreateTranslation(origin.X + constraint.Width / 2, origin.Y + constraint.Height / 2);
                 var transform = context.PushPreTransform(matrix);
                 context.DrawText(labelForeground, origin, formattedText);
+#if false
+                context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Magenta)), new Rect(origin, constraint));
+#endif
                 transform.Dispose();
+#if false
+                context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Cyan)), new Rect(origin, constraint));
+#endif
             }
         }
 
