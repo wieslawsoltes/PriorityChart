@@ -17,19 +17,15 @@
         </Style>
         <Style Selector="Slider.cursor /template/ RepeatButton#PART_DecreaseButton">
             <Setter Property="Background" Value="{DynamicResource SliderTrackFill}" />
-            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFill}" />
         </Style>
         <Style Selector="Slider:pointerover.cursor /template/ RepeatButton#PART_DecreaseButton">
             <Setter Property="Background" Value="{DynamicResource SliderTrackFillPointerOver}" />
-            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFillPointerOver}" />
         </Style>
         <Style Selector="Slider:pressed.cursor /template/ RepeatButton#PART_DecreaseButton">
             <Setter Property="Background" Value="{DynamicResource SliderTrackFillPressed}" />
-            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFillPressed}" />
         </Style>
         <Style Selector="Slider:horizontal.cursor">
             <Setter Property="Background" Value="{DynamicResource SliderTrackFill}" />
-            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFill}" />
         </Style>
     </Window.Styles>
     <TabControl>
