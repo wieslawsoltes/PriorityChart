@@ -18,6 +18,9 @@ namespace ChartDemo
         public static readonly StyledProperty<double> MaxValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(MaxValue));
 
+        public static readonly StyledProperty<bool> LogarithmicScaleProperty = 
+            AvaloniaProperty.Register<LineChart, bool>(nameof(LogarithmicScale));
+
         public static readonly StyledProperty<IBrush?> FillProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(Fill));
 
@@ -29,6 +32,15 @@ namespace ChartDemo
 
         public static readonly StyledProperty<IBrush?> LabelForegroundProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(LabelForeground));
+
+        public static readonly StyledProperty<double> LabelOffsetProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(LabelOffset));
+
+        public static readonly StyledProperty<double> LabelHeightProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(LabelHeight));
+
+        public static readonly StyledProperty<TextAlignment> LabelAlignmentProperty = 
+            AvaloniaProperty.Register<LineChart, TextAlignment>(nameof(LabelAlignment));
 
         public static readonly StyledProperty<double> LabelAngleProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(LabelAngle));
@@ -50,9 +62,6 @@ namespace ChartDemo
 
         public static readonly StyledProperty<double> BorderThicknessProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(BorderThickness));
-
-        public static readonly StyledProperty<TextAlignment> LabelAlignmentProperty = 
-            AvaloniaProperty.Register<LineChart, TextAlignment>(nameof(LabelAlignment));
 
         static LineChart()
         {
@@ -80,6 +89,12 @@ namespace ChartDemo
         {
             get => GetValue(MaxValueProperty);
             set => SetValue(MaxValueProperty, value);
+        }
+
+        public bool LogarithmicScale
+        {
+            get => GetValue(LogarithmicScaleProperty);
+            set => SetValue(LogarithmicScaleProperty, value);
         }
 
         public IBrush? Fill
@@ -110,6 +125,18 @@ namespace ChartDemo
         {
             get => GetValue(LabelAngleProperty);
             set => SetValue(LabelAngleProperty, value);
+        }
+
+        public double LabelOffset
+        {
+            get => GetValue(LabelOffsetProperty);
+            set => SetValue(LabelOffsetProperty, value);
+        }
+
+        public double LabelHeight
+        {
+            get => GetValue(LabelHeightProperty);
+            set => SetValue(LabelHeightProperty, value);
         }
 
         public TextAlignment LabelAlignment
@@ -214,11 +241,13 @@ namespace ChartDemo
 
             var valuesWidth = width - lineMargin.Left - lineMargin.Right;
             var valuesHeight = height - lineMargin.Top - lineMargin.Bottom;
-            var valuesMax = Values.Max();
-            var scaledValues = Values.Select(y => ScaleVertical(y, valuesMax, valuesHeight)).ToList();
-            var step = valuesWidth / (Values.Count - 1);
-            var points = new Point[Values.Count];
-            for (var i = 0; i < Values.Count; i++)
+            var logarithmicScale = LogarithmicScale;
+            var values = logarithmicScale ? Values.Select(y => Math.Log(y)).ToList() : Values.ToList();
+            var valuesMax = values.Max();
+            var scaledValues = values.Select(y => ScaleVertical(y, valuesMax, valuesHeight)).ToList();
+            var step = valuesWidth / (values.Count - 1);
+            var points = new Point[values.Count];
+            for (var i = 0; i < values.Count; i++)
             {
                 points[i] = new Point(i * step, scaledValues[i]);
             }
@@ -260,7 +289,7 @@ namespace ChartDemo
             var geometry = new StreamGeometry();
             using var geometryContext = geometry.Open();
             geometryContext.BeginFigure(points[0], true);
-            for (var i = 1; i < Values.Count; i++)
+            for (var i = 1; i < points.Length; i++)
             {
                 geometryContext.LineTo(points[i]);
             }
@@ -279,7 +308,7 @@ namespace ChartDemo
             var geometry = new StreamGeometry();
             using var geometryContext = geometry.Open();
             geometryContext.BeginFigure(points[0], false);
-            for (var i = 1; i < Values.Count; i++)
+            for (var i = 1; i < points.Length; i++)
             {
                 geometryContext.LineTo(points[i]);
             }
@@ -305,22 +334,23 @@ namespace ChartDemo
         private void DrawLabels(DrawingContext context, double step, double height, Thickness margin)
         {
             var typeface = new Typeface("system", FontStyle.Normal, FontWeight.Normal);
-            var fontSize = 12;
-            var topOffset = 10;
+            var labelFontSize = 12;
+            var labelOffset = LabelOffset;
+            var labelHeight = LabelHeight;
             var labelForeground = LabelForeground;
             var labelAngle = LabelAngle;
             var labelAlignment = LabelAlignment;
             for (var i = 0; i < Labels.Count; i++)
             {
-                var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + topOffset);
-                var constraint = new Size(step, margin.Bottom);
+                var origin = new Point(i * step - step / 2 + margin.Left, height + margin.Top + labelOffset);
+                var constraint = new Size(step, labelHeight);
                 var formattedText = new FormattedText()
                 {
                     Typeface = typeface,
                     Text = Labels[i],
                     TextAlignment = labelAlignment,
                     TextWrapping = TextWrapping.Wrap,
-                    FontSize = fontSize,
+                    FontSize = labelFontSize,
                     Constraint = constraint
                 };
                 var matrix = Matrix.CreateTranslation(-(origin.X + constraint.Width / 2), -(origin.Y + constraint.Height / 2))
@@ -328,11 +358,11 @@ namespace ChartDemo
                              * Matrix.CreateTranslation(origin.X + constraint.Width / 2, origin.Y + constraint.Height / 2);
                 var transform = context.PushPreTransform(matrix);
                 context.DrawText(labelForeground, origin, formattedText);
-#if false
+#if true
                 context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Magenta)), new Rect(origin, constraint));
 #endif
                 transform.Dispose();
-#if false
+#if true
                 context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Cyan)), new Rect(origin, constraint));
 #endif
             }
