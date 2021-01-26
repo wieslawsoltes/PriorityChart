@@ -50,6 +50,18 @@ namespace ChartDemo
         public static readonly StyledProperty<double> LabelAngleProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(LabelAngle));
 
+        public static readonly StyledProperty<FontFamily> LabelFontFamilyProperty = 
+            AvaloniaProperty.Register<LineChart, FontFamily>(nameof(LabelFontFamily));
+        
+        public static readonly StyledProperty<FontStyle> LabelFontStyleProperty = 
+            AvaloniaProperty.Register<LineChart, FontStyle>(nameof(LabelFontStyle));
+        
+        public static readonly StyledProperty<FontWeight> LabelFontWeightProperty = 
+            AvaloniaProperty.Register<LineChart, FontWeight>(nameof(LabelFontWeight));
+
+        public static readonly StyledProperty<double> LabelFontSizeProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(LabelFontSize));
+
         public static readonly StyledProperty<Thickness> LineMarginProperty = 
             AvaloniaProperty.Register<LineChart, Thickness>(nameof(LineMargin));
 
@@ -162,6 +174,30 @@ namespace ChartDemo
         {
             get => GetValue(LabelAlignmentProperty);
             set => SetValue(LabelAlignmentProperty, value);
+        }
+
+        public FontFamily LabelFontFamily
+        {
+            get => GetValue(LabelFontFamilyProperty);
+            set => SetValue(LabelFontFamilyProperty, value);
+        }
+
+        public FontStyle LabelFontStyle
+        {
+            get => GetValue(LabelFontStyleProperty);
+            set => SetValue(LabelFontStyleProperty, value);
+        }
+
+        public FontWeight LabelFontWeight
+        {
+            get => GetValue(LabelFontWeightProperty);
+            set => SetValue(LabelFontWeightProperty, value);
+        }
+
+        public double LabelFontSize
+        {
+            get => GetValue(LabelFontSizeProperty);
+            set => SetValue(LabelFontSizeProperty, value);
         }
 
         public Thickness LineMargin
@@ -316,8 +352,11 @@ namespace ChartDemo
 
         private void DrawLabels(DrawingContext context, List<string> labels, double step, double height, Thickness margin)
         {
-            var typeface = new Typeface("system", FontStyle.Normal, FontWeight.Normal);
-            var labelFontSize = 12;
+            var fontFamily = LabelFontFamily;
+            var fontStyle = LabelFontStyle;
+            var fontWeight = LabelFontWeight;
+            var typeface = new Typeface(fontFamily, fontStyle, fontWeight);
+            var fontSize = LabelFontSize;
             var labelOffset = LabelOffset;
             var labelHeight = LabelHeight;
             var labelForeground = LabelForeground;
@@ -333,7 +372,7 @@ namespace ChartDemo
                     Text = labels[i],
                     TextAlignment = labelAlignment,
                     TextWrapping = TextWrapping.Wrap,
-                    FontSize = labelFontSize,
+                    FontSize = fontSize,
                     Constraint = constraint
                 };
                 var matrix = Matrix.CreateTranslation(-(origin.X + constraint.Width / 2), -(origin.Y + constraint.Height / 2))
