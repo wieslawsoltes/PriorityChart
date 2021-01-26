@@ -43,6 +43,12 @@ namespace ChartDemo
         public static readonly StyledProperty<double> CursorValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(CursorValue));
 
+        public static readonly StyledProperty<IBrush?> BorderBrushProperty = 
+            AvaloniaProperty.Register<LineChart, IBrush?>(nameof(BorderBrush));
+
+        public static readonly StyledProperty<double> BorderThicknessProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(BorderThickness));
+
         static LineChart()
         {
             AffectsMeasure<LineChart>(StrokeThicknessProperty);
@@ -125,6 +131,18 @@ namespace ChartDemo
             set => SetValue(CursorValueProperty, value);
         }
 
+        public IBrush? BorderBrush
+        {
+            get => GetValue(BorderBrushProperty);
+            set => SetValue(BorderBrushProperty, value);
+        }
+
+        public double BorderThickness
+        {
+            get => GetValue(BorderThicknessProperty);
+            set => SetValue(BorderThicknessProperty, value);
+        }
+
         private List<string> Labels = new List<string>()
         {
             "6 days",
@@ -199,12 +217,12 @@ namespace ChartDemo
 
             if (Fill is not null)
             {
-                DrawDataFill(context, points, valuesWidth, valuesHeight, lineMargin);
+                DrawFill(context, points, valuesWidth, valuesHeight, lineMargin);
             }
 
             if (Stroke is not null)
             {
-                DrawDataStroke(context, points, lineMargin);
+                DrawStroke(context, points, lineMargin);
             }
 
             if (CursorStroke is not null)
@@ -217,10 +235,13 @@ namespace ChartDemo
                 DrawLabels(context, step, height, lineMargin);
             }
 
-            DrawBorder(context, 0, 0, width, height);
+            if (BorderBrush is not null)
+            {
+                DrawBorder(context, 0, 0, width, height);
+            }
         }
 
-        private void DrawDataFill(DrawingContext context, Point[] points, double width, double height, Thickness margin)
+        private void DrawFill(DrawingContext context, Point[] points, double width, double height, Thickness margin)
         {
             var fill = Fill;
             var geometry = new StreamGeometry();
@@ -238,7 +259,7 @@ namespace ChartDemo
             transform.Dispose();
         }
 
-        private void DrawDataStroke(DrawingContext context, Point[] points, Thickness margin)
+        private void DrawStroke(DrawingContext context, Point[] points, Thickness margin)
         {
             var stroke = Stroke;
             var strokeThickness = StrokeThickness;
@@ -298,13 +319,12 @@ namespace ChartDemo
 
         private void DrawBorder(DrawingContext context, double x, double y, double width, double height)
         {
-            var brush = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            var thickness = 1.0;
+            var brush = BorderBrush;
+            var thickness = BorderThickness;
             var pen = new Pen(brush, thickness);
             var rect = new Rect(x, y, width, height);
             var rectDeflate = rect.Deflate(thickness * 0.5);
             context.DrawRectangle(null, pen, rectDeflate, 0, 0);
         }
-     
     }
 }
