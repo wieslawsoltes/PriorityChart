@@ -10,6 +10,8 @@ namespace ChartDemo
 {
     public class LineChart : Control
     {
+        #region Properties
+
         public static readonly StyledProperty<double> MinValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(MinValue));
 
@@ -151,6 +153,8 @@ namespace ChartDemo
             get => GetValue(BorderThicknessProperty);
             set => SetValue(BorderThicknessProperty, value);
         }
+
+        #endregion
 
         private List<string> Labels = new List<string>()
         {
