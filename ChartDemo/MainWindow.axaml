@@ -33,7 +33,7 @@
         </Style>
         <!-- LineChart Labels -->
         <Style Selector="local|LineChart.labels">
-            <Setter Property="LabelForeground" Value="#000000" />
+            <Setter Property="LabelForeground" Value="Black" />
             <Setter Property="LabelAngle" Value="-45" />
             <Setter Property="LabelOffset" Value="15" />
             <Setter Property="LabelHeight" Value="45" />
@@ -62,7 +62,7 @@
         </Style>
         <!-- LineChart YAxis Title -->
         <Style Selector="local|LineChart.yAxisTitle">
-            <Setter Property="YAxisTitleForeground" Value="#000000" />
+            <Setter Property="YAxisTitleForeground" Value="Black" />
             <Setter Property="YAxisTitleAngle" Value="270" />
             <Setter Property="YAxisTitleOffset" Value="200" />
             <Setter Property="YAxisTitleHeight" Value="0" />
@@ -76,6 +76,8 @@
         <Style Selector="local|LineChart.border">
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderRadiusX" Value="4" />
+            <Setter Property="BorderRadiusY" Value="4" />
         </Style>
     </Window.Styles>
     <TabControl>
