@@ -118,18 +118,20 @@
                             Value="36" 
                             Margin="0,0,30,0"/>
                 </DockPanel>
-                <local:LineChart Classes="labels cursor border yAxis"
+                <local:LineChart Classes="labels cursor border yAxis yAxisTitle"
                                  Width="785"
                                  Height="428"
                                  Values="{Binding Values}"
                                  Labels="{Binding Labels}"
                                  MinValue="2"
                                  MaxValue="1008"
+                                 LogarithmicScale="False"
                                  ValuesMargin="60,30,30,60"
                                  StrokeThickness="2"
                                  CursorStroke="#72BD81"
                                  CursorThickness="2"
-                                 CursorValue="{Binding #CursorValue2.Value}">
+                                 CursorValue="{Binding #CursorValue2.Value}"
+                                 YAxisTitle="More Expensive">
                     <local:LineChart.Fill>
                         <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                             <LinearGradientBrush.GradientStops>
