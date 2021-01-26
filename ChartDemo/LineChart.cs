@@ -62,8 +62,8 @@ namespace ChartDemo
         public static readonly StyledProperty<double> LabelFontSizeProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(LabelFontSize));
 
-        public static readonly StyledProperty<Thickness> LineMarginProperty = 
-            AvaloniaProperty.Register<LineChart, Thickness>(nameof(LineMargin));
+        public static readonly StyledProperty<Thickness> ValuesMarginProperty = 
+            AvaloniaProperty.Register<LineChart, Thickness>(nameof(ValuesMargin));
 
         public static readonly StyledProperty<IBrush?> CursorStrokeProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(CursorStroke));
@@ -200,10 +200,10 @@ namespace ChartDemo
             set => SetValue(LabelFontSizeProperty, value);
         }
 
-        public Thickness LineMargin
+        public Thickness ValuesMargin
         {
-            get => GetValue(LineMarginProperty);
-            set => SetValue(LineMarginProperty, value);
+            get => GetValue(ValuesMarginProperty);
+            set => SetValue(ValuesMarginProperty, value);
         }
 
         public IBrush? CursorStroke
@@ -255,9 +255,9 @@ namespace ChartDemo
             var width = this.Bounds.Width;
             var height = this.Bounds.Height;
 
-            var lineMargin = LineMargin;
-            var valuesWidth = width - lineMargin.Left - lineMargin.Right;
-            var valuesHeight = height - lineMargin.Top - lineMargin.Bottom;
+            var valuesMargin = ValuesMargin;
+            var valuesWidth = width - valuesMargin.Left - valuesMargin.Right;
+            var valuesHeight = height - valuesMargin.Top - valuesMargin.Bottom;
             var logarithmicScale = LogarithmicScale;
             var values = Values;
             var labels = Labels;
@@ -277,22 +277,32 @@ namespace ChartDemo
 
             if (Fill is not null)
             {
-                DrawFill(context, points, valuesWidth, valuesHeight, lineMargin);
+                DrawFill(context, points, valuesWidth, valuesHeight, valuesMargin);
             }
 
             if (Stroke is not null)
             {
-                DrawStroke(context, points, lineMargin);
+                DrawStroke(context, points, valuesMargin);
             }
 
             if (CursorStroke is not null)
             {
-                DrawCursor(context, cursorPosition, valuesHeight, lineMargin);
+                DrawCursor(context, cursorPosition, valuesHeight, valuesMargin);
+            }
+
+            if (false)
+            {
+                DrawHorizontalAxis(context, valuesWidth, valuesHeight, valuesMargin); 
+            }
+
+            if (true)
+            {
+                DrawVerticalAxis(context, valuesWidth, valuesHeight, valuesMargin);
             }
 
             if (LabelForeground is not null)
             {
-                DrawLabels(context, labels, step, valuesHeight, lineMargin);
+                DrawLabels(context, labels, step, valuesHeight, valuesMargin);
             }
 
             if (BorderBrush is not null)
@@ -314,7 +324,7 @@ namespace ChartDemo
             geometryContext.LineTo(new Point(width, height));
             geometryContext.LineTo(new Point(0, height));
             geometryContext.EndFigure(true);
-            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left, margin.Top));
+            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + 0.5, margin.Top + 0.5));
             context.DrawGeometry(fill, null, geometry);
             transform.Dispose();
         }
@@ -332,7 +342,7 @@ namespace ChartDemo
             }
             geometryContext.EndFigure(false);
             var pen = new Pen(stroke, strokeThickness);
-            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left, margin.Top));
+            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + 0.5, margin.Top + 0.5));
             context.DrawGeometry(null, pen, geometry);
             transform.Dispose();
         }
@@ -342,11 +352,48 @@ namespace ChartDemo
             var brush = CursorStroke;
             var thickness = CursorThickness;
             var pen = new Pen(brush, thickness);
-            var p1 = new Point(position, 0);
-            var p2 = new Point(position, height);
+            var deflate = thickness / 0.5;
+            var p1 = new Point(position + deflate, 0);
+            var p2 = new Point(position + deflate, height);
             var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left, margin.Top));
             context.DrawLine(pen, p1, p2);
             transform.Dispose();
+        }
+
+        private void DrawHorizontalAxis(DrawingContext context, double width, double height, Thickness margin)
+        {
+            var size = 3.5;
+            var brush = Brushes.Black;
+            var thickness = 1;
+            var pen = new Pen(brush, thickness);
+            var deflate = thickness / 0.5;
+            var p1 = new Point(margin.Left + 0.0, margin.Top + height + deflate);
+            var p2 = new Point(margin.Left + width, margin.Top + height + deflate);
+            context.DrawLine(pen, p1, p2);
+            var p3 = new Point(p2.X, p2.Y);
+            var p4 = new Point(p2.X - size, p2.Y - size);
+            context.DrawLine(pen, p3, p4);
+            var p5 = new Point(p2.X, p2.Y);
+            var p6 = new Point(p2.X - size, p2.Y + size);
+            context.DrawLine(pen, p5, p6);
+        }
+
+        private void DrawVerticalAxis(DrawingContext context, double width, double height, Thickness margin)
+        {
+            var size = 3.5;
+            var brush = Brushes.Black;
+            var thickness = 1;
+            var pen = new Pen(brush, thickness);
+            var deflate = thickness / 0.5;
+            var p1 = new Point(margin.Left / 2 + deflate, margin.Top + 0.0);
+            var p2 = new Point(margin.Left / 2 + deflate, margin.Top + height);
+            context.DrawLine(pen, p1, p2);
+            var p3 = new Point(p1.X, p1.Y);
+            var p4 = new Point(p1.X - size, p1.Y + size);
+            context.DrawLine(pen, p3, p4);
+            var p5 = new Point(p1.X, p1.Y);
+            var p6 = new Point(p1.X + size, p1.Y + size);
+            context.DrawLine(pen, p5, p6);
         }
 
         private void DrawLabels(DrawingContext context, List<string> labels, double step, double height, Thickness margin)
