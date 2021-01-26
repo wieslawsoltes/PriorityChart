@@ -11,11 +11,10 @@ namespace ChartDemo
     {
         #region Properties
 
+        #region Values
+
         public static readonly StyledProperty<List<double>> ValuesProperty = 
             AvaloniaProperty.Register<LineChart, List<double>>(nameof(Values));
-
-        public static readonly StyledProperty<List<string>> LabelsProperty = 
-            AvaloniaProperty.Register<LineChart, List<string>>(nameof(Labels));
 
         public static readonly StyledProperty<double> MinValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(MinValue));
@@ -38,7 +37,12 @@ namespace ChartDemo
         public static readonly StyledProperty<Thickness> ValuesMarginProperty = 
             AvaloniaProperty.Register<LineChart, Thickness>(nameof(ValuesMargin));
 
-        #region Label
+        #endregion
+
+        #region Labels
+
+        public static readonly StyledProperty<List<string>> LabelsProperty = 
+            AvaloniaProperty.Register<LineChart, List<string>>(nameof(Labels));
 
         public static readonly StyledProperty<IBrush?> LabelForegroundProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(LabelForeground));
@@ -208,16 +212,12 @@ namespace ChartDemo
 
         #endregion
 
+        #region Values
+
         public List<double> Values
         {
             get => GetValue(ValuesProperty);
             set => SetValue(ValuesProperty, value);
-        }
-
-        public List<string> Labels
-        {
-            get => GetValue(LabelsProperty);
-            set => SetValue(LabelsProperty, value);
         }
 
         public double MinValue
@@ -262,7 +262,15 @@ namespace ChartDemo
             set => SetValue(ValuesMarginProperty, value);
         }
 
-        #region Label
+        #endregion
+
+        #region Labels
+
+        public List<string> Labels
+        {
+            get => GetValue(LabelsProperty);
+            set => SetValue(LabelsProperty, value);
+        }
 
         public IBrush? LabelForeground
         {
