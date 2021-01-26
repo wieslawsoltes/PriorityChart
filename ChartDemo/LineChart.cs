@@ -270,7 +270,6 @@ namespace ChartDemo
             {
                 points[i] = new Point(i * step, scaledValues[i]);
             }
-
             var minValue = MinValue;
             var maxValue = MaxValue;
             var cursorValue = CursorValue;
@@ -360,7 +359,7 @@ namespace ChartDemo
             var labelOffset = LabelOffset;
             var labelHeight = LabelHeight;
             var labelForeground = LabelForeground;
-            var labelAngle = LabelAngle;
+            var labelAngleRadians = Math.PI / 180.0 * LabelAngle;
             var labelAlignment = LabelAlignment;
             for (var i = 0; i < labels.Count; i++)
             {
@@ -375,16 +374,18 @@ namespace ChartDemo
                     FontSize = fontSize,
                     Constraint = constraint
                 };
-                var matrix = Matrix.CreateTranslation(-(origin.X + constraint.Width / 2), -(origin.Y + constraint.Height / 2))
-                             * Matrix.CreateRotation(Math.PI / 180.0 * labelAngle)
-                             * Matrix.CreateTranslation(origin.X + constraint.Width / 2, origin.Y + constraint.Height / 2);
+                var xPosition = origin.X + constraint.Width / 2;
+                var yPosition = origin.Y + constraint.Height / 2;
+                var matrix = Matrix.CreateTranslation(-xPosition, -yPosition)
+                             * Matrix.CreateRotation(labelAngleRadians)
+                             * Matrix.CreateTranslation(xPosition, yPosition);
                 var transform = context.PushPreTransform(matrix);
                 context.DrawText(labelForeground, origin, formattedText);
-#if true
+#if false
                 context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Magenta)), new Rect(origin, constraint));
 #endif
                 transform.Dispose();
-#if true
+#if false
                 context.DrawRectangle(null, new Pen(new SolidColorBrush(Colors.Cyan)), new Rect(origin, constraint));
 #endif
             }
