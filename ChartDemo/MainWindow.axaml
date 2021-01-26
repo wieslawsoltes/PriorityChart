@@ -75,8 +75,8 @@
                     <local:LineChart.Fill>
                         <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                             <LinearGradientBrush.GradientStops>
-                                <GradientStop Offset="0.0" Color="#C6DAFC"/>
-                                <GradientStop Offset="1.0" Color="#FFFFFF"/>
+                                <GradientStop Offset="0.0" Color="#4285F4"/>
+                                <GradientStop Offset="1.0" Color="#C6DAFC"/>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </local:LineChart.Fill>
@@ -84,7 +84,7 @@
                         <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStop Offset="0.0" Color="#4285F4"/>
-                                <GradientStop Offset="1.0" Color="#C6DAFC"/>
+                                <GradientStop Offset="1.0" Color="#4285F4"/>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </local:LineChart.Stroke>
