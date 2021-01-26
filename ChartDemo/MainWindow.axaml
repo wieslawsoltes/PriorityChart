@@ -52,7 +52,9 @@
                                  LabelAngle="-45"
                                  CursorStroke="#72BD81"
                                  CursorThickness="2"
-                                 CursorValue="{Binding #CursorValue1.Value}">
+                                 CursorValue="{Binding #CursorValue1.Value}"
+                                 BorderBrush="Black"
+                                 BorderThickness="1">
                 </local:LineChart>
             </DockPanel>
         </TabItem>
@@ -77,7 +79,9 @@
                                  StrokeThickness="2"
                                  CursorStroke="#72BD81"
                                  CursorThickness="2"
-                                 CursorValue="{Binding #CursorValue2.Value}">
+                                 CursorValue="{Binding #CursorValue2.Value}"
+                                 BorderBrush="Black"
+                                 BorderThickness="1">
                     <local:LineChart.Fill>
                         <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                             <LinearGradientBrush.GradientStops>
