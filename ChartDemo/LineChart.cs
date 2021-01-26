@@ -35,6 +35,11 @@ namespace ChartDemo
         public static readonly StyledProperty<double> StrokeThicknessProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(StrokeThickness));
 
+        public static readonly StyledProperty<Thickness> ValuesMarginProperty = 
+            AvaloniaProperty.Register<LineChart, Thickness>(nameof(ValuesMargin));
+
+        #region Label
+
         public static readonly StyledProperty<IBrush?> LabelForegroundProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(LabelForeground));
 
@@ -62,8 +67,97 @@ namespace ChartDemo
         public static readonly StyledProperty<double> LabelFontSizeProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(LabelFontSize));
 
-        public static readonly StyledProperty<Thickness> ValuesMarginProperty = 
-            AvaloniaProperty.Register<LineChart, Thickness>(nameof(ValuesMargin));
+        #endregion
+
+        #region XAxis
+
+        public static readonly StyledProperty<IBrush?> XAxisStrokeProperty = 
+            AvaloniaProperty.Register<LineChart, IBrush?>(nameof(XAxisStroke));
+
+        public static readonly StyledProperty<double> XAxisStrokeThicknessProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisStrokeThickness));
+
+        public static readonly StyledProperty<double> XAxisArrowSizeProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisArrowSize));
+
+        #endregion
+
+        #region YAxis
+
+        public static readonly StyledProperty<IBrush?> YAxisStrokeProperty = 
+            AvaloniaProperty.Register<LineChart, IBrush?>(nameof(YAxisStroke));
+
+        public static readonly StyledProperty<double> YAxisStrokeThicknessProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisStrokeThickness));
+
+        public static readonly StyledProperty<double> YAxisArrowSizeProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisArrowSize));
+
+        #endregion
+
+        #region XAxisTitle
+
+        public static readonly StyledProperty<IBrush?> XAxisTitleForegroundProperty = 
+            AvaloniaProperty.Register<LineChart, IBrush?>(nameof(XAxisTitleForeground));
+
+        public static readonly StyledProperty<double> XAxisTitleOffsetProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisTitleOffset));
+
+        public static readonly StyledProperty<double> XAxisTitleHeightProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisTitleHeight));
+
+        public static readonly StyledProperty<TextAlignment> XAxisTitleAlignmentProperty = 
+            AvaloniaProperty.Register<LineChart, TextAlignment>(nameof(XAxisTitleAlignment));
+
+        public static readonly StyledProperty<double> XAxisTitleAngleProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisTitleAngle));
+
+        public static readonly StyledProperty<FontFamily> XAxisTitleFontFamilyProperty = 
+            AvaloniaProperty.Register<LineChart, FontFamily>(nameof(XAxisTitleFontFamily));
+        
+        public static readonly StyledProperty<FontStyle> XAxisTitleFontStyleProperty = 
+            AvaloniaProperty.Register<LineChart, FontStyle>(nameof(XAxisTitleFontStyle));
+        
+        public static readonly StyledProperty<FontWeight> XAxisTitleFontWeightProperty = 
+            AvaloniaProperty.Register<LineChart, FontWeight>(nameof(XAxisTitleFontWeight));
+
+        public static readonly StyledProperty<double> XAxisTitleFontSizeProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(XAxisTitleFontSize));
+
+        #endregion
+
+        #region YAxisTitle
+
+        public static readonly StyledProperty<IBrush?> YAxisTitleForegroundProperty = 
+            AvaloniaProperty.Register<LineChart, IBrush?>(nameof(YAxisTitleForeground));
+
+        public static readonly StyledProperty<double> YAxisTitleOffsetProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisTitleOffset));
+
+        public static readonly StyledProperty<double> YAxisTitleHeightProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisTitleHeight));
+
+        public static readonly StyledProperty<TextAlignment> YAxisTitleAlignmentProperty = 
+            AvaloniaProperty.Register<LineChart, TextAlignment>(nameof(YAxisTitleAlignment));
+
+        public static readonly StyledProperty<double> YAxisTitleAngleProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisTitleAngle));
+
+        public static readonly StyledProperty<FontFamily> YAxisTitleFontFamilyProperty = 
+            AvaloniaProperty.Register<LineChart, FontFamily>(nameof(YAxisTitleFontFamily));
+        
+        public static readonly StyledProperty<FontStyle> YAxisTitleFontStyleProperty = 
+            AvaloniaProperty.Register<LineChart, FontStyle>(nameof(YAxisTitleFontStyle));
+        
+        public static readonly StyledProperty<FontWeight> YAxisTitleFontWeightProperty = 
+            AvaloniaProperty.Register<LineChart, FontWeight>(nameof(YAxisTitleFontWeight));
+
+        public static readonly StyledProperty<double> YAxisTitleFontSizeProperty = 
+            AvaloniaProperty.Register<LineChart, double>(nameof(YAxisTitleFontSize));
+
+        #endregion
+
+        #region Cursor
 
         public static readonly StyledProperty<IBrush?> CursorStrokeProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(CursorStroke));
@@ -74,11 +168,19 @@ namespace ChartDemo
         public static readonly StyledProperty<double> CursorValueProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(CursorValue));
 
+        #endregion
+
+        #region Border
+
         public static readonly StyledProperty<IBrush?> BorderBrushProperty = 
             AvaloniaProperty.Register<LineChart, IBrush?>(nameof(BorderBrush));
 
         public static readonly StyledProperty<double> BorderThicknessProperty = 
             AvaloniaProperty.Register<LineChart, double>(nameof(BorderThickness));
+
+        #endregion
+
+        #region LineChart ctor
 
         static LineChart()
         {
@@ -97,6 +199,8 @@ namespace ChartDemo
                 CursorThicknessProperty,
                 CursorValueProperty);
         }
+
+        #endregion
 
         public List<double> Values
         {
@@ -145,6 +249,14 @@ namespace ChartDemo
             get => GetValue(StrokeThicknessProperty);
             set => SetValue(StrokeThicknessProperty, value);
         }
+
+        public Thickness ValuesMargin
+        {
+            get => GetValue(ValuesMarginProperty);
+            set => SetValue(ValuesMarginProperty, value);
+        }
+
+        #region Label
 
         public IBrush? LabelForeground
         {
@@ -200,11 +312,170 @@ namespace ChartDemo
             set => SetValue(LabelFontSizeProperty, value);
         }
 
-        public Thickness ValuesMargin
+        #endregion
+
+        #region XAxis
+
+        public IBrush? XAxisStroke
         {
-            get => GetValue(ValuesMarginProperty);
-            set => SetValue(ValuesMarginProperty, value);
+            get => GetValue(XAxisStrokeProperty);
+            set => SetValue(XAxisStrokeProperty, value);
         }
+
+        public double XAxisStrokeThickness
+        {
+            get => GetValue(XAxisStrokeThicknessProperty);
+            set => SetValue(XAxisStrokeThicknessProperty, value);
+        }
+
+        public double XAxisArrowSize
+        {
+            get => GetValue(XAxisArrowSizeProperty);
+            set => SetValue(XAxisArrowSizeProperty, value);
+        }
+
+        #endregion
+
+        #region YAxis
+
+        public IBrush? YAxisStroke
+        {
+            get => GetValue(YAxisStrokeProperty);
+            set => SetValue(YAxisStrokeProperty, value);
+        }
+
+        public double YAxisStrokeThickness
+        {
+            get => GetValue(YAxisStrokeThicknessProperty);
+            set => SetValue(YAxisStrokeThicknessProperty, value);
+        }
+
+        public double YAxisArrowSize
+        {
+            get => GetValue(YAxisArrowSizeProperty);
+            set => SetValue(YAxisArrowSizeProperty, value);
+        }
+
+        #endregion
+
+        #region XAxisTitle
+
+        public IBrush? XAxisTitleForeground
+        {
+            get => GetValue(XAxisTitleForegroundProperty);
+            set => SetValue(XAxisTitleForegroundProperty, value);
+        }
+
+        public double XAxisTitleAngle
+        {
+            get => GetValue(XAxisTitleAngleProperty);
+            set => SetValue(XAxisTitleAngleProperty, value);
+        }
+
+        public double XAxisTitleOffset
+        {
+            get => GetValue(XAxisTitleOffsetProperty);
+            set => SetValue(XAxisTitleOffsetProperty, value);
+        }
+
+        public double XAxisTitleHeight
+        {
+            get => GetValue(XAxisTitleHeightProperty);
+            set => SetValue(XAxisTitleHeightProperty, value);
+        }
+
+        public TextAlignment XAxisTitleAlignment
+        {
+            get => GetValue(XAxisTitleAlignmentProperty);
+            set => SetValue(XAxisTitleAlignmentProperty, value);
+        }
+
+        public FontFamily XAxisTitleFontFamily
+        {
+            get => GetValue(XAxisTitleFontFamilyProperty);
+            set => SetValue(XAxisTitleFontFamilyProperty, value);
+        }
+
+        public FontStyle XAxisTitleFontStyle
+        {
+            get => GetValue(XAxisTitleFontStyleProperty);
+            set => SetValue(XAxisTitleFontStyleProperty, value);
+        }
+
+        public FontWeight XAxisTitleFontWeight
+        {
+            get => GetValue(XAxisTitleFontWeightProperty);
+            set => SetValue(XAxisTitleFontWeightProperty, value);
+        }
+
+        public double XAxisTitleFontSize
+        {
+            get => GetValue(XAxisTitleFontSizeProperty);
+            set => SetValue(XAxisTitleFontSizeProperty, value);
+        }
+        
+
+        #endregion
+
+        #region YAxisTitle
+
+        public IBrush? YAxisTitleForeground
+        {
+            get => GetValue(YAxisTitleForegroundProperty);
+            set => SetValue(YAxisTitleForegroundProperty, value);
+        }
+
+        public double YAxisTitleAngle
+        {
+            get => GetValue(YAxisTitleAngleProperty);
+            set => SetValue(YAxisTitleAngleProperty, value);
+        }
+
+        public double YAxisTitleOffset
+        {
+            get => GetValue(YAxisTitleOffsetProperty);
+            set => SetValue(YAxisTitleOffsetProperty, value);
+        }
+
+        public double YAxisTitleHeight
+        {
+            get => GetValue(YAxisTitleHeightProperty);
+            set => SetValue(YAxisTitleHeightProperty, value);
+        }
+
+        public TextAlignment YAxisTitleAlignment
+        {
+            get => GetValue(YAxisTitleAlignmentProperty);
+            set => SetValue(YAxisTitleAlignmentProperty, value);
+        }
+
+        public FontFamily YAxisTitleFontFamily
+        {
+            get => GetValue(YAxisTitleFontFamilyProperty);
+            set => SetValue(YAxisTitleFontFamilyProperty, value);
+        }
+
+        public FontStyle YAxisTitleFontStyle
+        {
+            get => GetValue(YAxisTitleFontStyleProperty);
+            set => SetValue(YAxisTitleFontStyleProperty, value);
+        }
+
+        public FontWeight YAxisTitleFontWeight
+        {
+            get => GetValue(YAxisTitleFontWeightProperty);
+            set => SetValue(YAxisTitleFontWeightProperty, value);
+        }
+
+        public double YAxisTitleFontSize
+        {
+            get => GetValue(YAxisTitleFontSizeProperty);
+            set => SetValue(YAxisTitleFontSizeProperty, value);
+        }
+
+        #endregion
+
+        #region Cursor
 
         public IBrush? CursorStroke
         {
@@ -224,6 +495,10 @@ namespace ChartDemo
             set => SetValue(CursorValueProperty, value);
         }
 
+        #endregion
+
+        #region Border
+
         public IBrush? BorderBrush
         {
             get => GetValue(BorderBrushProperty);
@@ -235,6 +510,8 @@ namespace ChartDemo
             get => GetValue(BorderThicknessProperty);
             set => SetValue(BorderThicknessProperty, value);
         }
+
+        #endregion
 
         #endregion
 
@@ -290,14 +567,14 @@ namespace ChartDemo
                 DrawCursor(context, cursorPosition, valuesHeight, valuesMargin);
             }
 
-            if (false)
+            if (XAxisStroke is not null)
             {
-                DrawHorizontalAxis(context, valuesWidth, valuesHeight, valuesMargin); 
+                DrawXAxis(context, valuesWidth, valuesHeight, valuesMargin); 
             }
 
-            if (true)
+            if (YAxisStroke is not null)
             {
-                DrawVerticalAxis(context, valuesWidth, valuesHeight, valuesMargin);
+                DrawYAxis(context, valuesWidth, valuesHeight, valuesMargin);
             }
 
             if (LabelForeground is not null)
@@ -314,6 +591,7 @@ namespace ChartDemo
         private void DrawFill(DrawingContext context, Point[] points, double width, double height, Thickness margin)
         {
             var fill = Fill;
+            var deflate = 0.5;
             var geometry = new StreamGeometry();
             using var geometryContext = geometry.Open();
             geometryContext.BeginFigure(points[0], true);
@@ -324,7 +602,7 @@ namespace ChartDemo
             geometryContext.LineTo(new Point(width, height));
             geometryContext.LineTo(new Point(0, height));
             geometryContext.EndFigure(true);
-            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + 0.5, margin.Top + 0.5));
+            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + deflate, margin.Top + deflate));
             context.DrawGeometry(fill, null, geometry);
             transform.Dispose();
         }
@@ -333,6 +611,7 @@ namespace ChartDemo
         {
             var stroke = Stroke;
             var strokeThickness = StrokeThickness;
+            var deflate = strokeThickness * 0.5;
             var geometry = new StreamGeometry();
             using var geometryContext = geometry.Open();
             geometryContext.BeginFigure(points[0], false);
@@ -342,7 +621,7 @@ namespace ChartDemo
             }
             geometryContext.EndFigure(false);
             var pen = new Pen(stroke, strokeThickness);
-            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + 0.5, margin.Top + 0.5));
+            var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left + deflate, margin.Top + deflate));
             context.DrawGeometry(null, pen, geometry);
             transform.Dispose();
         }
@@ -352,7 +631,7 @@ namespace ChartDemo
             var brush = CursorStroke;
             var thickness = CursorThickness;
             var pen = new Pen(brush, thickness);
-            var deflate = thickness / 0.5;
+            var deflate = thickness * 0.5;
             var p1 = new Point(position + deflate, 0);
             var p2 = new Point(position + deflate, height);
             var transform = context.PushPreTransform(Matrix.CreateTranslation(margin.Left, margin.Top));
@@ -360,13 +639,13 @@ namespace ChartDemo
             transform.Dispose();
         }
 
-        private void DrawHorizontalAxis(DrawingContext context, double width, double height, Thickness margin)
+        private void DrawXAxis(DrawingContext context, double width, double height, Thickness margin)
         {
-            var size = 3.5;
-            var brush = Brushes.Black;
-            var thickness = 1;
+            var size = XAxisArrowSize;
+            var brush = XAxisStroke;
+            var thickness = XAxisStrokeThickness;
             var pen = new Pen(brush, thickness);
-            var deflate = thickness / 0.5;
+            var deflate = thickness * 0.5;
             var p1 = new Point(margin.Left + 0.0, margin.Top + height + deflate);
             var p2 = new Point(margin.Left + width, margin.Top + height + deflate);
             context.DrawLine(pen, p1, p2);
@@ -378,13 +657,13 @@ namespace ChartDemo
             context.DrawLine(pen, p5, p6);
         }
 
-        private void DrawVerticalAxis(DrawingContext context, double width, double height, Thickness margin)
+        private void DrawYAxis(DrawingContext context, double width, double height, Thickness margin)
         {
-            var size = 3.5;
-            var brush = Brushes.Black;
-            var thickness = 1;
+            var size = YAxisArrowSize;
+            var brush = YAxisStroke;
+            var thickness = YAxisStrokeThickness;
             var pen = new Pen(brush, thickness);
-            var deflate = thickness / 0.5;
+            var deflate = thickness * 0.5;
             var p1 = new Point(margin.Left / 2 + deflate, margin.Top + 0.0);
             var p2 = new Point(margin.Left / 2 + deflate, margin.Top + height);
             context.DrawLine(pen, p1, p2);
