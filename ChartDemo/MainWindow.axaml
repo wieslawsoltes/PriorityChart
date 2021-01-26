@@ -31,12 +31,15 @@
     <TabControl>
         <TabItem Header="Solid">
             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Slider x:Name="CursorValue1" 
-                        Classes="cursor"
-                        Minimum="2" 
-                        Maximum="1008" 
-                        Value="36" 
-                        DockPanel.Dock="Bottom"/>
+                <DockPanel DockPanel.Dock="Bottom">
+                    <Label Content="_Fee:" Width="60" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <Slider x:Name="CursorValue1" 
+                            Classes="cursor"
+                            Minimum="2" 
+                            Maximum="1008" 
+                            Value="36" 
+                            Margin="0,0,30,0"/>
+                </DockPanel>
                 <local:LineChart Width="785"
                                  Height="428"
                                  MinValue="2"
@@ -55,12 +58,15 @@
         </TabItem>
         <TabItem Header="LinearGradient">
             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Slider x:Name="CursorValue2" 
-                        Classes="cursor"
-                        Minimum="2" 
-                        Maximum="1008" 
-                        Value="36" 
-                        DockPanel.Dock="Bottom"/>
+                <DockPanel DockPanel.Dock="Bottom">
+                    <Label Content="_Fee:" Width="60" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <Slider x:Name="CursorValue2" 
+                            Classes="cursor"
+                            Minimum="2" 
+                            Maximum="1008" 
+                            Value="36" 
+                            Margin="0,0,30,0"/>
+                </DockPanel>
                 <local:LineChart Width="785"
                                  Height="428"
                                  MinValue="2"
