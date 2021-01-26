@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityChartDemo", "PriorityChartDemo\PriorityChartDemo.csproj", "{A0709B45-CEA8-4271-8348-AB37FDA8B280}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartDemo", "ChartDemo\ChartDemo.csproj", "{A0709B45-CEA8-4271-8348-AB37FDA8B280}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

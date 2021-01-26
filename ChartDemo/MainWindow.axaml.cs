@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace PriorityChartDemo
+namespace ChartDemo
 {
     public class MainWindow : Window
     {

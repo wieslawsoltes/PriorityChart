@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace PriorityChartDemo
+namespace ChartDemo
 {
     public class App : Application
     {

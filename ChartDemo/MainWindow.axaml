@@ -1,0 +1,84 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:ChartDemo"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="652"
+        x:Class="ChartDemo.MainWindow"
+        Title="Chart Demo"
+        UseLayoutRounding="False"
+        Width="1003" Height="652"
+        WindowStartupLocation="CenterScreen">
+    <TabControl>
+        <TabItem Header="Solid">
+            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Slider x:Name="CursorValue" 
+                        Minimum="2" 
+                        Maximum="1008" 
+                        Value="36" 
+                        DockPanel.Dock="Bottom">
+                    <Slider.Styles>
+                        <Style Selector="Slider /template/ RepeatButton#PART_DecreaseButton">
+                            <Setter Property="Background" Value="{DynamicResource SliderTrackFill}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFill}" />
+                        </Style>
+                        <Style Selector="Slider:pointerover /template/ RepeatButton#PART_DecreaseButton">
+                            <Setter Property="Background" Value="{DynamicResource SliderTrackFillPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFillPointerOver}" />
+                        </Style>
+                        <Style Selector="Slider:pressed /template/ RepeatButton#PART_DecreaseButton">
+                            <Setter Property="Background" Value="{DynamicResource SliderTrackFillPressed}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFillPressed}" />
+                        </Style>
+                        <Style Selector="Slider:horizontal">
+                            <Setter Property="Background" Value="{DynamicResource SliderTrackFill}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SliderTrackFill}" />
+                        </Style>
+                    </Slider.Styles>
+                    <Slider.RenderTransform>
+                        <RotateTransform Angle="-180"></RotateTransform>
+                    </Slider.RenderTransform>
+                </Slider>
+                <local:LineChart Width="785"
+                                 Height="428"
+                                 MinValue="2"
+                                 MaxValue="1008"
+                                 LineMargin="60,30,30,60"
+                                 Fill="#C6DAFC"
+                                 Stroke="#4285F4"
+                                 StrokeThickness="2"
+                                 LabelForeground="#000000"
+                                 LabelAngle="-45"
+                                 CursorStroke="#72BD81"
+                                 CursorThickness="2"
+                                 CursorValue="{Binding #CursorValue.Value}">
+                </local:LineChart>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="LinearGradient">
+            <local:LineChart Width="785"
+                             Height="428"
+                             LineMargin="60,30,30,60"
+                             LabelForeground="#000000"
+                             LabelAngle="-45"
+                             StrokeThickness="2">
+                <local:LineChart.Fill>
+                    <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#C6DAFC"/>
+                            <GradientStop Offset="1.0" Color="#FFFFFF"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </local:LineChart.Fill>
+                <local:LineChart.Stroke>
+                    <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#4285F4"/>
+                            <GradientStop Offset="1.0" Color="#C6DAFC"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </local:LineChart.Stroke>
+            </local:LineChart>
+        </TabItem>
+    </TabControl>
+</Window>
