@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using WalletWasabi.Fluent.Views;
 
-namespace ChartDemo
+namespace WalletWasabi.Fluent
 {
     public class App : Application
     {

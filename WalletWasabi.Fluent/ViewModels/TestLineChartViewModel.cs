@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace ChartDemo
+namespace WalletWasabi.Fluent.ViewModels
 {
-    public class MainWindowViewModel
+    public class TestLineChartViewModel
     {
-
         public List<double> Values => new List<double>()
         {
             15,

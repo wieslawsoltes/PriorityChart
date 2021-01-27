@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace ChartDemo
+namespace WalletWasabi.Fluent.Controls
 {
     public class LineChart : Control
     {
