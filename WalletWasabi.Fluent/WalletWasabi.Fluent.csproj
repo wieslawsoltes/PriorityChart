@@ -11,9 +11,22 @@
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
     </ItemGroup>
     <ItemGroup>
-      <Compile Update="Views\MainWindow.axaml.cs">
-        <DependentUpon>MainWindow.axaml</DependentUpon>
+      <Compile Include="..\..\..\GitHub-Forks\WalletWasabi\WalletWasabi.Fluent\Controls\LineChart.cs">
+        <Link>Controls\LineChart.cs</Link>
+      </Compile>
+      <Compile Include="..\..\..\GitHub-Forks\WalletWasabi\WalletWasabi.Fluent\ViewModels\TestLineChartViewModel.cs">
+        <Link>ViewModels\TestLineChartViewModel.cs</Link>
+      </Compile>
+      <Compile Include="..\..\..\GitHub-Forks\WalletWasabi\WalletWasabi.Fluent\Views\TestLineChartView.axaml.cs">
+        <Link>Views\TestLineChartView.axaml.cs</Link>
+        <DependentUpon>Views\TestLineChartView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaResource Include="..\..\..\GitHub-Forks\WalletWasabi\WalletWasabi.Fluent\Views\TestLineChartView.axaml">
+        <Link>Views\TestLineChartView.axaml</Link>
+        <SubType>Designer</SubType>
+      </AvaloniaResource>
     </ItemGroup>
 </Project>
