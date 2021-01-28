@@ -7,7 +7,10 @@
         x:Class="WalletWasabi.Fluent.Views.MainWindow"
         Title="LineChart Demo"
         UseLayoutRounding="False"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        Background="{DynamicResource RegionColor}"
         Width="1003" Height="652"
         WindowStartupLocation="CenterScreen">
-    <views:TestLineChartView/>
+    <views:TestLineChartView Margin="20 36 20 20"/>
 </Window>
