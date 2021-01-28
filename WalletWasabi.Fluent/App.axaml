@@ -2,6 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="WalletWasabi.Fluent.App">
     <Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Dark"/>
+        <Style>
+            <Style.Resources>
+                <!-- Light -->
+                <!-- <SolidColorBrush x:Key="TextForegroundColor">#212121</SolidColorBrush> -->
+                <!-- <Color x:Key="RegionColor">#FFFAFAFA</Color> -->
+                <!-- Dark -->
+                <SolidColorBrush x:Key="TextForegroundColor">#FFFFFF</SolidColorBrush>
+                <Color x:Key="RegionColor">#FF212121</Color>
+            </Style.Resources>
+        </Style>
     </Application.Styles>
 </Application>
